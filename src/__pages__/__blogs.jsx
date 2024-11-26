@@ -13,16 +13,18 @@ const blogCategories = [
         blogs: [
             {
                 title: 'Data Types and Array Basic',
-                excerpt: 'Explore the basic of Dsa',
+                // excerpt: 'Explore the basic of Dsa',
                 link: 'https://datatype.hashnode.dev/series/dsa'
             },
             {
-                title: 'Dynamic Programming Master Class',
-                excerpt: 'Solving complex problems with DP approaches'
+                title: 'Hashing Techinque',
+                // excerpt: 'Solving complex problems with DP approaches'
+                link: 'https://datatype.hashnode.dev/hash-array'
             },
             {
-                title: 'Graph Algorithms Demystified',
-                excerpt: 'Understanding graph theory fundamentals'
+                title: 'Number Games',
+                // excerpt: 'Understanding graph theory fundamentals'
+                link: 'https://datatype.hashnode.dev/series/number-game'
             }
         ]
     },
@@ -32,16 +34,13 @@ const blogCategories = [
         description: 'Modern infrastructure and deployment strategies',
         blogs: [
             {
-                title: 'Kubernetes Deployment Patterns',
-                excerpt: 'Advanced container orchestration techniques'
+                title: 'Git & Github',
+                // excerpt: 'Advanced container orchestration techniques'
+                link: 'https://medium.com/@itsmepankaj/list/git-github-ebcea9ade2de'
             },
             {
-                title: 'CI/CD Pipeline Optimization',
-                excerpt: 'Streamlining software delivery processes'
-            },
-            {
-                title: 'Infrastructure as Code Revolution',
-                excerpt: 'Automating infrastructure management'
+                title: 'CI/CD Pipeline',
+                link: 'https://github.com/ifeelpankaj/Pipelining/blob/main/README.md'
             }
         ]
     },
@@ -52,15 +51,7 @@ const blogCategories = [
         blogs: [
             {
                 title: 'Microservices Architecture',
-                excerpt: 'Building scalable distributed systems'
-            },
-            {
-                title: 'Database Scaling Strategies',
-                excerpt: 'Handling massive data with efficient designs'
-            },
-            {
-                title: 'Real-time System Design',
-                excerpt: 'Creating responsive and efficient systems'
+                excerpt: 'Working on it...'
             }
         ]
     },
@@ -70,16 +61,8 @@ const blogCategories = [
         description: 'Latest trends and technological insights',
         blogs: [
             {
-                title: 'AI and Machine Learning Trends',
-                excerpt: 'Exploring cutting-edge AI innovations'
-            },
-            {
-                title: 'Blockchain Beyond Cryptocurrency',
-                excerpt: 'Real-world blockchain applications'
-            },
-            {
-                title: 'Quantum Computing Primer',
-                excerpt: 'Understanding quantum technological revolution'
+                title: 'AWS EC2 and Jenkins Set Up',
+                link: 'https://datatype.hashnode.dev/series/devops'
             }
         ]
     }
@@ -93,7 +76,9 @@ const Blogs = () => {
     };
 
     return (
-        <section className="blogs-showcase">
+        <section
+            className="blogs-showcase"
+            id="blogs">
             <div className="blogs-container">
                 <h1>Tech Blog Insights</h1>
                 <div className="blog-categories">

@@ -1,14 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import logo from '../__assets__/logo.png';
 
 const Header = () => {
-    const [isDialogOpen, setIsDialogOpen] = React.useState(false);
-
+    const [isDialogOpen, setIsDialogOpen] = useState(false);
+    const [isMobileView, setIsMobileView] = useState(window.innerWidth <= 768);
+    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const toggleDialog = () => {
         setIsDialogOpen(!isDialogOpen);
     };
-
     const dialogVariants = {
         hidden: { opacity: 0, y: '-100vh', scale: 0.8 },
         visible: {
@@ -27,6 +27,26 @@ const Header = () => {
             transition: { duration: 0.3 }
         }
     };
+    React.useEffect(() => {
+        const handleResize = () => {
+            setIsMobileView(window.innerWidth <= 768);
+        };
+
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
+
+    const navLinks = [
+        { href: '#work-Done', label: 'Latest Projects' },
+        { href: '#experience', label: 'Experience' },
+        { href: '#experiments', label: 'Experiments' },
+        { href: '#blogs', label: 'Blogs' },
+        { href: '#contact', label: 'Contact', onClick: () => setIsDialogOpen(true) }
+    ];
+
+    const toggleMobileMenu = () => {
+        setIsMobileMenuOpen(!isMobileMenuOpen);
+    };
 
     const overlayVariants = {
         hidden: { opacity: 0 },
@@ -40,41 +60,58 @@ const Header = () => {
         }
     };
 
-    const navLinks = [
-        { href: '#work-Done', label: 'Latest Projects' },
-        { href: '#experience', label: 'Experience' },
-        { href: '#experiments', label: 'Experiments' },
-        { href: '#blogs', label: 'Blogs' },
-        { href: '#contact', label: 'Contact', onClick: toggleDialog }
-    ];
-    let about = `I'm Pankaj, a 24-year-old Indian Freelance Full Stack developer. I'm a weird guy who likes making weird things with web technologies.
-                  I like to resolve design problems, create smart user interface and imagine useful interaction, developing rich web experiences & web applications.
-                  When not working or futzing around with code.`;
+    const about = `I'm Pankaj, a 24-year-old Indian freelance Full Stack Developer with a passion for creating innovative solutions using web technologies. 
+    I enjoy solving design challenges, crafting smart user interfaces, and developing rich, user-centric web applications that deliver seamless experiences. 
+    My expertise spans frontend, backend, and infrastructure, allowing me to build performant applications that address real-world problems effectively.
+    Outside of coding, I love traveling to hilly and mountainous regions, where I find inspiration and relaxation.`;
+
     return (
         <>
-            <motion.header
-                className="header"
-                initial={{ opacity: 0, y: -50 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, ease: 'easeOut' }}>
+            <motion.header className="header">
                 <motion.img
                     src={logo}
                     alt="Logo"
                     className="logo"
                     whileHover={{ scale: 1.2 }}
                 />
+
+                {/* Desktop Navigation */}
                 <nav className="nav">
                     {navLinks.map((link) => (
-                        <motion.a
+                        <a
                             key={link.href}
                             href={link.href}
-                            onClick={link.onClick}
-                            whileHover={{ scale: 1.1, color: '#FF5733' }}
-                            transition={{ duration: 0.3 }}>
+                            onClick={link.onClick}>
                             {link.label}
-                        </motion.a>
+                        </a>
                     ))}
                 </nav>
+
+                {/* Mobile Menu Toggle */}
+                {isMobileView && (
+                    <div
+                        className={`mobile-menu-toggle ${isMobileMenuOpen ? 'active' : ''}`}
+                        onClick={toggleMobileMenu}>
+                        <div className="hamburger"></div>
+                    </div>
+                )}
+
+                {/* Mobile Navigation Overlay */}
+                {isMobileView && (
+                    <div className={`mobile-nav-overlay ${isMobileMenuOpen ? 'active' : ''}`}>
+                        {navLinks.map((link) => (
+                            <a
+                                key={link.href}
+                                href={link.href}
+                                onClick={() => {
+                                    link.onClick && link.onClick();
+                                    toggleMobileMenu();
+                                }}>
+                                {link.label}
+                            </a>
+                        ))}
+                    </div>
+                )}
             </motion.header>
 
             <AnimatePresence>
@@ -145,5 +182,4 @@ const Header = () => {
         </>
     );
 };
-
 export default Header;

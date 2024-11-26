@@ -28,7 +28,7 @@ transactions per week with 99.9% reliability.`
             ]
         },
         {
-            year: 'Apr-2021 To Apr-2022',
+            year: 'Apr/2021 - Apr/2022',
             company: 'Freelance',
             role: 'Freelance.com',
             responsibilities: [
