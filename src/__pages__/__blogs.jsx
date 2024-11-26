@@ -127,7 +127,12 @@ const Blogs = () => {
                                                 className="blog-item">
                                                 <h3>{blog.title}</h3>
                                                 <p>{blog.excerpt}</p>
-                                                <a href={blog.link}>Read More</a>
+                                                <a
+                                                    href={blog.link}
+                                                    target="_blank"
+                                                    rel="noopener noreferrer">
+                                                    Read More
+                                                </a>
                                             </div>
                                         ))}
                                     </motion.div>
