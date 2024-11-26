@@ -1,0 +1,156 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap');
+
+$primary-color: #3498db;
+$secondary-color: #2ecc71;
+$background-color: rgba(255, 255, 255, 0.95);
+$text-color: #2c3e50;
+$accent-color: #ff5733;
+$shadow-color: rgba(0, 0, 0, 0.1);
+
+.dialog-box {
+    position: fixed;
+    left: 10%;
+    transform: translate(-50%, -50%);
+    width: 90%;
+    max-width: 700px;
+    background-color: $background-color;
+    border-radius: 20px;
+    box-shadow:
+        0 15px 35px $shadow-color,
+        0 5px 15px rgba(0, 0, 0, 0.07);
+    padding: 2.5rem;
+    z-index: 1200;
+    overflow: hidden;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+
+    // Animated subtle background effect
+    &::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: radial-gradient(circle at center, rgba($primary-color, 0.1) 0%, transparent 70%);
+        animation: rotate 15s linear infinite;
+        z-index: -1;
+    }
+
+    .dialog-content {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 2rem;
+        font-family: 'Inter', sans-serif;
+
+        .about-me,
+        .contact-form {
+            text-align: center;
+        }
+
+        h2 {
+            color: $primary-color;
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+            position: relative;
+
+            &::after {
+                content: '';
+                position: absolute;
+                bottom: -10px;
+                left: 50%;
+                transform: translateX(-50%);
+                width: 60px;
+                height: 3px;
+                background-color: $accent-color;
+            }
+        }
+
+        .contact-form {
+            form {
+                display: flex;
+                flex-direction: column;
+                gap: 1.5rem;
+
+                label {
+                    text-align: left;
+                    font-weight: 500;
+                    color: darken($text-color, 10%);
+                }
+
+                input,
+                textarea {
+                    width: 100%;
+                    padding: 0.75rem;
+                    border: 1px solid lighten($text-color, 60%);
+                    border-radius: 10px;
+                    transition: all 0.3s ease;
+                    font-family: 'Inter', sans-serif;
+
+                    &:focus {
+                        outline: none;
+                        border-color: $primary-color;
+                        box-shadow: 0 0 0 3px rgba($primary-color, 0.2);
+                    }
+                }
+
+                textarea {
+                    resize: vertical;
+                    min-height: 120px;
+                }
+
+                button {
+                    background-color: $primary-color;
+                    color: white;
+                    border: none;
+                    padding: 0.75rem;
+                    border-radius: 10px;
+                    cursor: pointer;
+                    font-weight: 600;
+                    text-transform: uppercase;
+                    letter-spacing: 1px;
+                    transition: all 0.3s ease;
+
+                    &:hover {
+                        background-color: darken($primary-color, 10%);
+                        transform: translateY(-3px);
+                        box-shadow: 0 5px 15px rgba($primary-color, 0.4);
+                    }
+                }
+            }
+        }
+    }
+
+    .close-button {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        background: none;
+        border: none;
+        font-size: 2rem;
+        cursor: pointer;
+        color: $accent-color;
+        transition: all 0.3s ease;
+        opacity: 0.7;
+
+        &:hover {
+            transform: rotate(90deg) scale(1.2);
+            opacity: 1;
+        }
+    }
+}
+
+@keyframes rotate {
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+// Responsive Adjustments
+@media screen and (max-width: 768px) {
+    .dialog-box {
+        width: 95%;
+        padding: 1.5rem;
+        border-radius: 15px;
+    }
+}

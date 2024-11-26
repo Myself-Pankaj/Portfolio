@@ -1,0 +1,93 @@
+$primary-color: #007acc;
+.projects {
+    margin-top: 2rem;
+    padding: 2rem;
+    border-top: 10px solid #f9f9f9;
+    // background: #f9f9f9;
+
+    .projects-title {
+        text-align: center;
+        font-size: 3rem;
+        color: $primary-color;
+        margin-bottom: 3rem;
+    }
+
+    .projects-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 1.5rem;
+
+        .project-card {
+            perspective: 1000px;
+            .project-card-inner {
+                position: relative;
+                width: 100%;
+                height: 300px;
+                transform-style: preserve-3d;
+                transform: rotateY(0);
+                transition: transform 0.6s;
+
+                &:hover {
+                    transform: rotateY(180deg);
+                }
+
+                .project-card-front,
+                .project-card-back {
+                    position: absolute;
+                    width: 100%;
+                    height: 100%;
+                    backface-visibility: hidden;
+                    border-radius: 10px;
+                    overflow: hidden;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    flex-direction: column;
+                }
+
+                .project-card-front {
+                    background: #fff;
+                    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+                    .project-image {
+                        width: 100%;
+                        height: 150px;
+                        object-fit: cover;
+                        border-bottom: 2px solid #eee;
+                    }
+
+                    h3 {
+                        margin-top: 1rem;
+                        font-size: 1.2rem;
+                        color: #555;
+                    }
+                }
+
+                .project-card-back {
+                    background: #007bff;
+                    color: #fff;
+                    transform: rotateY(180deg);
+                    padding: 1rem;
+                    text-align: center;
+
+                    p {
+                        margin-bottom: 1rem;
+                    }
+
+                    .project-link {
+                        color: #fff;
+                        background: #0056b3;
+                        padding: 0.5rem 1rem;
+                        border-radius: 5px;
+                        text-decoration: none;
+                        transition: background 0.3s;
+
+                        &:hover {
+                            background: #003f87;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
