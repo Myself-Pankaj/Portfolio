@@ -1,72 +1,8 @@
 import React from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
+import { FaChevronDown as ChevronDown, FaChevronUp as ChevronUp } from 'react-icons/fa';
 
-import { IoCodeSlashOutline as Code, IoCloud as Cloud } from 'react-icons/io5';
-import { BsDatabaseFillGear as Database } from 'react-icons/bs';
-import { FaBookOpen as BookOpen, FaChevronDown as ChevronDown, FaChevronUp as ChevronUp } from 'react-icons/fa';
-
-const blogCategories = [
-    {
-        icon: <Code color="#3498db" />,
-        title: 'DSA Development',
-        description: 'Dive deep into Data Structures and Algorithms',
-        blogs: [
-            {
-                title: 'Data Types and Array Basic',
-                // excerpt: 'Explore the basic of Dsa',
-                link: 'https://datatype.hashnode.dev/series/dsa'
-            },
-            {
-                title: 'Hashing Techinque',
-                // excerpt: 'Solving complex problems with DP approaches'
-                link: 'https://datatype.hashnode.dev/hash-array'
-            },
-            {
-                title: 'Number Games',
-                // excerpt: 'Understanding graph theory fundamentals'
-                link: 'https://datatype.hashnode.dev/series/number-game'
-            }
-        ]
-    },
-    {
-        icon: <Cloud color="#2ecc71" />,
-        title: 'DevOps Insights',
-        description: 'Modern infrastructure and deployment strategies',
-        blogs: [
-            {
-                title: 'Git & Github',
-                // excerpt: 'Advanced container orchestration techniques'
-                link: 'https://medium.com/@itsmepankaj/list/git-github-ebcea9ade2de'
-            },
-            {
-                title: 'CI/CD Pipeline',
-                link: 'https://github.com/ifeelpankaj/Pipelining/blob/main/README.md'
-            }
-        ]
-    },
-    {
-        icon: <Database color="#e74c3c" />,
-        title: 'System Design',
-        description: 'Architectural patterns and scalable solutions',
-        blogs: [
-            {
-                title: 'Microservices Architecture',
-                excerpt: 'Working on it...'
-            }
-        ]
-    },
-    {
-        icon: <BookOpen color="#9b59b6" />,
-        title: 'Informative Tech',
-        description: 'Latest trends and technological insights',
-        blogs: [
-            {
-                title: 'AWS EC2 and Jenkins Set Up',
-                link: 'https://datatype.hashnode.dev/series/devops'
-            }
-        ]
-    }
-];
+import blogs from '../__assets__/blogs.json';
 
 const Blogs = () => {
     const [openCategory, setOpenCategory] = React.useState(null);
@@ -75,72 +11,145 @@ const Blogs = () => {
         setOpenCategory(openCategory === index ? null : index);
     };
 
+    const containerVariants = {
+        hidden: { opacity: 0 },
+        visible: {
+            opacity: 1,
+            transition: {
+                staggerChildren: 0.2
+            }
+        }
+    };
+
+    const categoryVariants = {
+        hidden: {
+            opacity: 0,
+            y: 30,
+            scale: 0.95
+        },
+        visible: {
+            opacity: 1,
+            y: 0,
+            scale: 1,
+            transition: {
+                duration: 0.6,
+                ease: 'easeOut'
+            }
+        }
+    };
+
+    const contentVariants = {
+        hidden: {
+            opacity: 0,
+            height: 0,
+            transition: {
+                duration: 0.2
+            }
+        },
+        visible: {
+            opacity: 1,
+            height: 'auto',
+            transition: {
+                duration: 0.4,
+                ease: 'easeOut'
+            }
+        }
+    };
+
     return (
         <section
-            className="blogs-showcase"
+            className="my_blogs_showcase"
             id="blogs">
-            <div className="blogs-container">
-                <h1>Tech Blog Insights</h1>
-                <div className="blog-categories">
-                    {blogCategories.map((category, index) => (
+            <div className="my_blogs_container">
+                <motion.h1
+                    initial={{ opacity: 0, y: -30 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.8, ease: 'easeOut' }}>
+                    Tech Blog Insights
+                </motion.h1>
+
+                <motion.div
+                    className="my_blogs_categories"
+                    variants={containerVariants}
+                    initial="hidden"
+                    animate="visible">
+                    {blogs.map((category, index) => (
                         <motion.div
                             key={index}
-                            className="blog-category"
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: index * 0.2 }}>
+                            className="my_blogs_category"
+                            variants={categoryVariants}
+                            whileHover={{
+                                y: -4,
+                                transition: { duration: 0.2 }
+                            }}>
                             <div
-                                className="category-header"
-                                onClick={() => toggleCategory(index)}>
-                                <div className="category-title">
-                                    {category.icon}
+                                className="my_blogs_category_header"
+                                onClick={() => toggleCategory(index)}
+                                role="button"
+                                tabIndex={0}
+                                onKeyDown={(e) => {
+                                    if (e.key === 'Enter' || e.key === ' ') {
+                                        toggleCategory(index);
+                                    }
+                                }}
+                                aria-expanded={openCategory === index}
+                                aria-controls={`category-${index}`}>
+                                <div className="my_blogs_category_title">
+                                    <motion.div
+                                        whileHover={{
+                                            scale: 1.1,
+                                            rotate: 5
+                                        }}
+                                        transition={{ duration: 0.2 }}>
+                                        {/* {category.icon} */}
+                                    </motion.div>
                                     <span>{category.title}</span>
                                 </div>
                                 <motion.div
-                                    className="expand-icon"
+                                    className="my_blogs_expand_icon"
                                     animate={{
                                         rotate: openCategory === index ? 180 : 0
-                                    }}>
+                                    }}
+                                    transition={{ duration: 0.3 }}
+                                    whileHover={{ scale: 1.1 }}>
                                     {openCategory === index ? <ChevronUp /> : <ChevronDown />}
                                 </motion.div>
                             </div>
 
-                            <AnimatePresence>
-                                {openCategory === index && (
+                            <motion.div
+                                id={`category-${index}`}
+                                className="my_blogs_category_blogs"
+                                variants={contentVariants}
+                                initial="hidden"
+                                animate="visible">
+                                <p className="my_blogs_category_description">{category.description}</p>
+                                {category.blogs.map((blog, blogIndex) => (
                                     <motion.div
-                                        className="category-blogs"
-                                        initial={{ opacity: 0, height: 0 }}
-                                        animate={{
-                                            opacity: 1,
-                                            height: 'auto',
-                                            transition: { duration: 0.3 }
-                                        }}
-                                        exit={{
-                                            opacity: 0,
-                                            height: 0,
-                                            transition: { duration: 0.2 }
-                                        }}>
-                                        <p className="category-description">{category.description}</p>
-                                        {category.blogs.map((blog, blogIndex) => (
-                                            <div
-                                                key={blogIndex}
-                                                className="blog-item">
-                                                <h3>{blog.title}</h3>
-                                                <p>{blog.excerpt}</p>
-                                                <a
-                                                    href={blog.link}
-                                                    target="_blank"
-                                                    rel="noopener noreferrer">
-                                                    Read More
-                                                </a>
-                                            </div>
-                                        ))}
+                                        key={blogIndex}
+                                        className="my_blogs_blog_item"
+                                        initial={{ opacity: 0, x: -20 }}
+                                        animate={{ opacity: 1, x: 0 }}
+                                        transition={{ delay: blogIndex * 0.1, duration: 0.4 }}
+                                        whileHover={{ x: 4 }}>
+                                        <h3>{blog.title}</h3>
+                                        <p>{blog.excerpt}</p>
+                                        {blog.link ? (
+                                            <a
+                                                href={blog.link}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                aria-label={`Read more about ${blog.title}`}>
+                                                Read More
+                                            </a>
+                                        ) : (
+                                            <span className="my_blogs_coming_soon">Coming Soon</span>
+                                        )}
                                     </motion.div>
-                                )}
-                            </AnimatePresence>
+                                ))}
+                            </motion.div>
                         </motion.div>
                     ))}
-                </div>
+                </motion.div>
             </div>
         </section>
     );
